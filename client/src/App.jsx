@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { TransferForm } from "./components/TransferForm";
+import { UserLayout } from "./layout/UserLayout";
+import { Dashboard } from "./pages/Dashboard";
+import { SignInPage } from "./pages/SignInPage";
+import { SignUpPage } from "./pages/SignUpPage";
+import { TransactionHistory } from "./pages/TransactionHistory";
+import { TransferDetails } from "./pages/TransferDetails";
+import { TransferFunds } from "./pages/TransferFunds";
+import { CreateAccountForm } from "./components/CreateAccountForm";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/signin" element={<SignInPage />} />
+          <Route path="/user" element={<UserLayout />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="create-account" element={<CreateAccountForm />} />
+            <Route path="transactions" element={<TransactionHistory />} />
+            <Route path="transferfunds" element={<TransferFunds />}>
+              <Route path="form" element={<TransferForm />} />
+            </Route>
+            <Route
+              path="/user/transferfunds/details"
+              element={<TransferDetails />}
+            />
+          </Route>
+          <Route path="/" element={<SignInPage />} />
+          <Route path="*" element={<SignInPage />} />
+        </Routes>
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
