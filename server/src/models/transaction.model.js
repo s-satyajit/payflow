@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const transactionSchema = new mongoose.Schema({
-  sendorAccount: {
+  senderAccount: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Account",
     required: true,

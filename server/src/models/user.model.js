@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -38,9 +38,9 @@ const userSchema = new mongoose.Schema({
     required: [true, "Phone number is required"],
     minLength: [10, "Phone number must be at least 10 digits"],
   },
-  account: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Account",
+  account: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: "Account" 
   }],
 });
 

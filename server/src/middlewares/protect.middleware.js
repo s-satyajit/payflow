@@ -12,6 +12,7 @@ export const protectMiddleware = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     if (decoded.userId && decoded.email) {
+      // console.log(`User ID: ${decoded.userId}, Email: ${decoded.email}`);
       req.userId = decoded.userId;
       return next();
     } else res.status(401).json({ message: `You are not authenticated` });

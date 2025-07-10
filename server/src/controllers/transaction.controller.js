@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import { Account } from "../models/account.model.js";
-import { Transaction } from "../models/transaction.model.js";
-import { transactionSchema } from "../schemas/transaction.schema.js";
 import { Notification } from "../models/notification.model.js";
+import { Transaction } from "../models/transaction.model.js";
 import { User } from "../models/user.model.js";
+import { transactionSchema } from "../schemas/transaction.schema.js";
 
 export const transferFunds = async (req, res) => {
   const session = await mongoose.startSession();
@@ -14,9 +14,11 @@ export const transferFunds = async (req, res) => {
     return res.status(500).json({ message: `Invalid input for transaction` });
   const { toAccountNumber, ifsc, firstname, lastname, amount, description } =
     transactionResult.data;
-  const id = req.body.id;
+  const accountNumber = req.headers["account-number"];
   try {
-    const senderAccount = await Account.findById(id).session(session);
+    const senderAccount = await Account.findOne({ accountNumber }).session(
+      session
+    );
     if (!senderAccount) {
       throw new Error("No primary account found for sender");
     }
@@ -29,8 +31,9 @@ export const transferFunds = async (req, res) => {
     const receiverAccount = await Account.findOne({
       accountNumber: numTo,
       ifsc: code,
-    }).session(session);
-    // .populate('user')
+    })
+      .session(session)
+      .populate("user");
 
     if (!receiverAccount) {
       throw new Error("Recipient not found or details mismatch");
@@ -60,9 +63,10 @@ export const transferFunds = async (req, res) => {
     const transaction = await Transaction.create(
       [
         {
-          sendorAccount: senderAccount._id,
+          senderAccount: senderAccount._id,
           receiverAccount: receiverAccount._id,
           amount: amount,
+          createdAt: new Date(),
           description:
             description ||
             `Transfer to ${receiverUser.firstname} ${receiverUser.lastname}`,
@@ -129,23 +133,20 @@ export const transferFunds = async (req, res) => {
 
 export const getUserTransactions = async (req, res) => {
   try {
-    const { userId } = req.body;
-    const accounts = await Account.find({
-      user: userId,
-    });
-    console.log(accounts);
+    const userId = req.userId;
+    const accounts = await Account.find({ user: userId });
     const accountIds = accounts.map((acc) => acc._id);
-    console.log(accountIds);
 
     const transactions = await Transaction.find({
-      $or: [{ senderAccount: { $in: accountIds } }],
+      $or: [
+        { senderAccount: { $in: accountIds } },
+        { receiverAccount: { $in: accountIds } },
+      ],
     })
       .sort({ createdAt: -1 })
       .populate("senderAccount", "accountNumber bankName")
       .populate("receiverAccount", "accountNumber bankName")
       .lean();
-
-    console.log(transactions);
 
     const formattedTransactions = transactions.map((txn) => ({
       id: txn._id,
@@ -158,8 +159,8 @@ export const getUserTransactions = async (req, res) => {
         name: txn.metadata.receiverName || "Unknown",
       },
       sender: {
-        accountNumber: txn.sendorAccount.accountNumber,
-        bankName: txn.sendorAccount.bankName,
+        accountNumber: txn.senderAccount?.accountNumber,
+        bankName: txn.senderAccount?.bankName,
       },
       status: txn.status,
     }));
