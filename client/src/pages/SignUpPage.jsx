@@ -27,7 +27,7 @@ export const SignUpPage = () => {
     };
     const apiUrl = import.meta.env.VITE_API_URL;
     try {
-      const response = await axios.post(`${apiUrl}/api/v1/auth/signup`, {
+      const response = await axios.post(`${apiUrl}/auth/signup`, {
         username: payload.username,
         firstname: payload.firstname,
         lastname: payload.lastname,

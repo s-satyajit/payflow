@@ -22,7 +22,7 @@ export const userService = () => {
     }
     const fetchUser = async () => {
       try {
-        const { data } = await axios.get(`${apiUrl}/api/v1/user/me`, {
+        const { data } = await axios.get(`${apiUrl}/user/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -44,7 +44,7 @@ export const CreateAccountForm = () => {
     try {
       const token = localStorage.getItem("token");
       const { data } = await axios.post(
-        `${apiUrl}/api/v1/account/create-account`,
+        `${apiUrl}/account/create-account`,
         {
           accountNumber: Number(accountNumber),
           ifsc,

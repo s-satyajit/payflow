@@ -19,7 +19,7 @@ export const transactionService = () => {
     const fetchTransactions = async () => {
       try {
         const { data } = await axios.get(
-          `${apiUrl}/api/v1/transaction/transactions`,
+          `${apiUrl}/transaction/transactions`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -79,7 +79,7 @@ export const TransferForm = () => {
 
     try {
       const { data } = await axios.post(
-        `${apiUrl}/api/v1/transaction/transfer-funds`,
+        `${apiUrl}/transaction/transfer-funds`,
         {
           toAccountNumber: payload.toAccountNumber,
           ifsc: payload.ifsc,

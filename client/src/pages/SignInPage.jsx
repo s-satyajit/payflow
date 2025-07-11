@@ -20,7 +20,7 @@ export const SignInPage = () => {
       password: passwordRef.current.value,
     };
     try {
-      const response = await axios.post(`${apiUrl}/api/v1/auth/signin`, {
+      const response = await axios.post(`${apiUrl}/auth/signin`, {
         email: payload.email,
         password: payload.password,
       });

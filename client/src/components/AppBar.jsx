@@ -23,7 +23,7 @@ export const AppBar = () => {
     }
     const fetchUser = async () => {
       try {
-        const { data } = await axios.get(`${apiUrl}/api/v1/user/me`, {
+        const { data } = await axios.get(`${apiUrl}/user/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -60,7 +60,7 @@ export const AppBar = () => {
     const timeout = setTimeout(async () => {
       try {
         const { data } = await axios.get(
-          `${apiUrl}/api/v1/account/search-accounts`,
+          `${apiUrl}/account/search-accounts`,
           {
             params: { q: searchQuery },
             headers: { Authorization: `Bearer ${token}` },
