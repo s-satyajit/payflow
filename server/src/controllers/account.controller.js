@@ -84,18 +84,26 @@ export const searchAccounts = async (req, res) => {
     const { q } = req.query;
     if (!q) return res.status(400).json({ error: `Search query not provided` });
 
-    const account = await Account.find({
-      $or: [{ accountNumber: q }, { ifsc: q }, { bankName: { $regex: q } }],
+    const searchRegex = new RegExp(q, 'i');
+    
+    const accounts = await Account.find({
+      $or: [
+        { accountNumber: { $regex: searchRegex } },
+        { ifsc: { $regex: searchRegex } },
+        { bankName: { $regex: searchRegex } }
+      ],
     }).populate('user', 'firstname lastname');
 
+    console.log(`Search query: "${q}", Found ${accounts.length} accounts`);
+
     res.json({
-      user: account.map((u) => ({
-        id: u._id,
-        firstname: u.user?.firstname || "",
-        lastname: u.user?.lastname || "",
-        accountNumber: u.accountNumber,
-        ifsc: u.ifsc,
-        bankName: u.bankName,
+      user: accounts.map((acc) => ({
+        id: acc._id,
+        firstname: acc.user?.firstname || "",
+        lastname: acc.user?.lastname || "",
+        accountNumber: acc.accountNumber,
+        ifsc: acc.ifsc,
+        bankName: acc.bankName,
       })),
     });
   } catch (err) {
