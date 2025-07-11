@@ -42,17 +42,28 @@ export const TransactionHistory = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white py-10 px-4 animate-fade">
-      <div className="max-w-5xl mx-auto animate-pop">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white py-10 px-4">
+      <div className="max-w-5xl mx-auto animate-fade animate-pop">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">
             <button
               className="p-2 rounded-full bg-gray-800 hover:bg-blue-800 text-blue-300 hover:text-white shadow transition button-press"
-              onClick={() => navigate('/user/dashboard')}
+              onClick={() => navigate("/user/dashboard")}
               aria-label="Back to Dashboard"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
               </svg>
             </button>
             <h2 className="text-3xl font-extrabold tracking-tight">
@@ -69,8 +80,14 @@ export const TransactionHistory = () => {
           </div>
         </div>
         <div
-          className={`transition-all duration-300 ease-in-out ${filterOpen ? 'filter-drawer-open' : 'filter-drawer-closed'}`}
-          style={{ overflow: 'hidden', maxHeight: filterOpen ? '200px' : '0', opacity: filterOpen ? 1 : 0 }}
+          className={`transition-all duration-300 ease-in-out ${
+            filterOpen ? "filter-drawer-open" : "filter-drawer-closed"
+          }`}
+          style={{
+            overflow: "hidden",
+            maxHeight: filterOpen ? "200px" : "0",
+            opacity: filterOpen ? 1 : 0,
+          }}
         >
           <div className="mb-6 flex items-center gap-2 bg-gray-800 p-4 rounded-lg shadow animate-filter-drawer">
             <input
@@ -82,7 +99,7 @@ export const TransactionHistory = () => {
             />
             <button
               className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded font-semibold shadow text-white cursor-pointer"
-              onClick={handleFilter} 
+              onClick={handleFilter}
             >
               Apply
             </button>

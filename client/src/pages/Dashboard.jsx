@@ -2,11 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { userService } from "../services/userService";
 
 export const Dashboard = () => {
-    const { username, firstname, lastname, email, phone, accounts, id } =
-      userService();
-      console.log("my data:", username)
+  const { username, firstname, lastname, email, phone, accounts, id } =
+    userService();
+  console.log("my data:", username);
 
-      const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">

@@ -15,21 +15,32 @@ export const TransferFunds = () => {
   const isModalOpen = location.pathname.endsWith("/form");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white py-10 px-4 flex flex-col items-center relative animate-fade">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white py-10 px-4 flex flex-col items-center relative">
       <div
         className={`max-w-2xl w-full mx-auto transition-all duration-300 ${
           isModalOpen ? "filter blur-sm pointer-events-none select-none" : ""
-        } animate-pop`}
+        } animate-fade animate-pop`}
       >
         <h2 className="text-3xl font-extrabold tracking-tight mb-8">
           <span className="flex items-center gap-3">
             <button
               className="p-2 rounded-full bg-gray-800 hover:bg-blue-800 text-blue-300 hover:text-white shadow transition button-press"
-              onClick={() => navigate('/user/dashboard')}
+              onClick={() => navigate("/user/dashboard")}
               aria-label="Back to Dashboard"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
               </svg>
             </button>
             <span>Choose an account to transfer funds from</span>

@@ -67,10 +67,10 @@ export const CreateAccountForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 animate-fade">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800">
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-900 rounded-3xl shadow-2xl p-8 max-w-md w-full border border-gray-800 flex flex-col gap-6 animate-pop transition-transform duration-300 hover:scale-101"
+        className="bg-gray-900 rounded-3xl shadow-2xl p-8 max-w-md w-full border border-gray-800 flex flex-col gap-6 animate-fade animate-pop transition-transform duration-300 hover:scale-101"
       >
         <h2 className="text-2xl font-bold text-blue-400 mb-2 text-center">
           Create New Account
