@@ -28,10 +28,12 @@ const accountSchema = new mongoose.Schema({
     min: [0, "Balance cannot be negative"],
     default: 10000,
   },
-  transactions: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Transaction",
-  }],
+  transactions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Transaction",
+    },
+  ],
 });
 
 export const Account = mongoose.model("Account", accountSchema);

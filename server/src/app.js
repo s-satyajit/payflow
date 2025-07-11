@@ -3,7 +3,7 @@ import express from "express";
 import accountRoutes from "./routes/account.route.js";
 import authRoutes from "./routes/auth.route.js";
 import transactionRoutes from "./routes/transaction.route.js";
-import userRoutes from './routes/user.route.js';
+import userRoutes from "./routes/user.route.js";
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(express.json());
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/account", accountRoutes);
 app.use("/api/v1/transaction", transactionRoutes);
-app.use("/api/v1/user", userRoutes)
+app.use("/api/v1/user", userRoutes);
 
 app.get("/test", (req, res) => {
   res.json({ message: "API is working!" });

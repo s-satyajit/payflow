@@ -5,9 +5,9 @@ export const getUserDetails = async (req, res) => {
   try {
     const userId = req.userId;
     if (!userId) {
-      return res.status(400).json({ message: 'User ID not found in request' });
+      return res.status(400).json({ message: "User ID not found in request" });
     }
-    const user = await User.findById(userId).populate('account').lean();
+    const user = await User.findById(userId).populate("account").lean();
     if (!user) {
       return res.status(404).json({ message: `User not found` });
     }

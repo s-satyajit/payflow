@@ -38,10 +38,12 @@ const userSchema = new mongoose.Schema({
     required: [true, "Phone number is required"],
     minLength: [10, "Phone number must be at least 10 digits"],
   },
-  account: [{ 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: "Account" 
-  }],
+  account: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Account",
+    },
+  ],
 });
 
 userSchema.methods.createHash = async (plainTextPassword) => {
