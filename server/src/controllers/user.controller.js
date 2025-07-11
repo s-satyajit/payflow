@@ -28,8 +28,6 @@ export const getUserDetails = async (req, res) => {
         balance: acc.balance,
       }));
     }
-    const accounts = await Account.find({ user: userId })
-    console.log("user.account:", JSON.stringify(user.account));
     res.status(200).json(payload);
   } catch (err) {
     console.error(err);

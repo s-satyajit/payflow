@@ -86,12 +86,13 @@ export const searchAccounts = async (req, res) => {
 
     const account = await Account.find({
       $or: [{ accountNumber: q }, { ifsc: q }, { bankName: { $regex: q } }],
-    });
+    }).populate('user', 'firstname lastname');
 
     res.json({
       user: account.map((u) => ({
         id: u._id,
-        user: u.user,
+        firstname: u.user?.firstname || "",
+        lastname: u.user?.lastname || "",
         accountNumber: u.accountNumber,
         ifsc: u.ifsc,
         bankName: u.bankName,

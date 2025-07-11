@@ -21,7 +21,9 @@ export const signup = async (req, res) => {
     });
 
     if (existing)
-      return res.status(409).json({ msg: `Username already taken` });
+      return res
+        .status(409)
+        .json({ message: `Email or username already taken` });
 
     const newUser = await User({
       username,
@@ -35,13 +37,13 @@ export const signup = async (req, res) => {
     await newUser.save();
 
     const token = jwt.sign(
-      { userId: newUser._userId, email: newUser.email },
+      { userId: newUser._id, email: newUser.email },
       process.env.JWT_SECRET,
       { expiresIn: "1hr" }
     );
 
     return res.status(201).json({
-      msg: `User created successfully!`,
+      message: `User created successfully!`,
       token,
       user: {
         id: newUser._id,
@@ -73,9 +75,9 @@ export const signin = async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ msg: `Invalid Email` });
+    if (!user) return res.status(400).json({ message: `Invalid Email` });
     const isMatch = await user.validatePassword(password);
-    if (!isMatch) return res.status(400).json({ msg: `Invalid Password` });
+    if (!isMatch) return res.status(400).json({ message: `Invalid Password` });
 
     const token = jwt.sign(
       { userId: user._id, email: user.email },
@@ -84,7 +86,7 @@ export const signin = async (req, res) => {
     );
 
     return res.status(200).json({
-      msg: `Sign in successful`,
+      message: `Sign in successful`,
       token,
       user: {
         id: user._id,
