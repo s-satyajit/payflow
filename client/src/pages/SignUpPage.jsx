@@ -11,6 +11,8 @@ export const SignUpPage = () => {
   const passwordRef = useRef();
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [response, setResponse] = useState("");
+  const [fadeOut, setFadeOut] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,8 +36,11 @@ export const SignUpPage = () => {
         password: payload.password,
       });
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-      navigate("/user/dashboard");
+      setResponse(response.data.msg);
+      setFadeOut(true);
+      setTimeout(() => {
+        navigate("/user/dashboard");
+      }, 400);
     } catch (err) {
       const message = err.response?.data?.message || err.message;
       setError(message);
@@ -44,12 +49,22 @@ export const SignUpPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800">
-      <div className="w-full max-w-lg p-8 bg-gray-900 rounded-3xl shadow-2xl border border-gray-800 flex flex-col items-center">
-        <h2 className="mb-2 text-3xl font-bold text-blue-400 text-center">Sign up for PayFlow</h2>
-        <p className="mb-6 text-blue-200 text-center">Enter your information to create an account</p>
+      <div
+        className={`w-full max-w-lg p-8 bg-gray-900 rounded-3xl shadow-2xl border border-gray-800 flex flex-col items-center ${
+          fadeOut ? "animate-fade-out" : "animate-fade"
+        }`}
+      >
+        <h2 className="mb-2 text-3xl font-bold text-blue-400 text-center">
+          Sign up for PayFlow
+        </h2>
+        <p className="mb-6 text-blue-200 text-center">
+          Enter your information to create an account
+        </p>
         <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
           <div>
-            <label className="block text-sm font-medium mb-1 text-blue-200">Username</label>
+            <label className="block text-sm font-medium mb-1 text-blue-200">
+              Username
+            </label>
             <input
               type="text"
               ref={usernameRef}
@@ -60,7 +75,9 @@ export const SignUpPage = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1 text-blue-200">First Name</label>
+              <label className="block text-sm font-medium mb-1 text-blue-200">
+                First Name
+              </label>
               <input
                 type="text"
                 ref={firstnameRef}
@@ -70,7 +87,9 @@ export const SignUpPage = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1 text-blue-200">Last Name</label>
+              <label className="block text-sm font-medium mb-1 text-blue-200">
+                Last Name
+              </label>
               <input
                 type="text"
                 ref={lastnameRef}
@@ -81,7 +100,9 @@ export const SignUpPage = () => {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1 text-blue-200">Phone Number</label>
+            <label className="block text-sm font-medium mb-1 text-blue-200">
+              Phone Number
+            </label>
             <input
               type="number"
               ref={phoneRef}
@@ -91,7 +112,9 @@ export const SignUpPage = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1 text-blue-200">Email</label>
+            <label className="block text-sm font-medium mb-1 text-blue-200">
+              Email
+            </label>
             <input
               type="email"
               ref={emailRef}
@@ -101,7 +124,9 @@ export const SignUpPage = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1 text-blue-200">Password</label>
+            <label className="block text-sm font-medium mb-1 text-blue-200">
+              Password
+            </label>
             <input
               type="password"
               ref={passwordRef}
@@ -110,8 +135,17 @@ export const SignUpPage = () => {
               required
             />
           </div>
-          {error && <div className="text-red-400 text-center text-sm">{error}</div>}
-          <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg px-4 py-3 shadow text-lg transition">Sign up</button>
+          {error && (
+            <div className="text-red-400 text-center text-sm">
+              {response || error}
+            </div>
+          )}
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg px-4 py-3 shadow text-lg transition button-press animate-pop"
+          >
+            Sign up
+          </button>
         </form>
         <div className="w-full mt-4 flex flex-col items-center">
           <span className="text-gray-400">Already have an account?</span>
